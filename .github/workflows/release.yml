@@ -23,5 +23,4 @@ jobs:
         with:
           draft: true
           files: |
-            ./*.tar.xz
-            SHA256.txt
+            ./*.tar.gz
