@@ -22,3 +22,15 @@ index b15ec9e1bb39..234723935c2c 100644
      "HAVE_SBRK=1",
      "HAVE_STRUCT_STAT_ST_MTIM_TV_NSEC=1",
  ]
+diff --git a/utils/bazel/third_party_build/zlib-ng.BUILD b/utils/bazel/third_party_build/zlib-ng.BUILD
+index 055261acb..27bb1c41f 100644
+--- a/utils/bazel/third_party_build/zlib-ng.BUILD
++++ b/utils/bazel/third_party_build/zlib-ng.BUILD
+@@ -103,6 +103,6 @@ cc_library(
+     }),
+     # Clang includes zlib with angled instead of quoted includes, so we need
+     # strip_include_prefix here.
+-    strip_include_prefix = ".",
++    includes = ["."],
+     visibility = ["//visibility:public"],
+ )
