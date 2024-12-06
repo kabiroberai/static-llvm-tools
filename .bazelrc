@@ -2,20 +2,8 @@ common --dynamic_mode=off
 # Upstream builds PIE, but it doesn't have much benefit when fully statically linked.
 #common --force_pic
 
-common --bes_results_url=https://app.buildbuddy.io/invocation/
-common --bes_backend=grpcs://remote.buildbuddy.io
-common --remote_cache=grpcs://remote.buildbuddy.io
-common --remote_download_toplevel
 common --nobuild_runfile_links
-common --remote_timeout=3600
-common --remote_executor=grpcs://remote.buildbuddy.io
-common --noexperimental_throttle_remote_action_building
-common --jobs=1000
 
-common --extra_execution_platforms=//rbe_platform
-common --host_platform=//rbe_platform
-
-common --platforms @zig_sdk//libc_aware/platform:linux_amd64_musl
 common --experimental_platform_in_output_dir
 
 common --incompatible_enable_cc_toolchain_resolution

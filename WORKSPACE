@@ -20,27 +20,22 @@ LLVM_COMMIT = "26a1d6601d727a96f4301d0d8647b5a42760ae0c"  # 18.1.2
 
 http_archive(
     name = "llvm-raw",
-    build_file = "//:BUILD.llvm-raw",
+    build_file_content = "# empty",
     integrity = "sha256-KsQDkrF6dGhV2l68+BhEu26+Qvp1f7HaRnLnqiglfPM=",
     patch_args = ["-p1"],
     patches = [
         "//:llvm.patch",
-        "//:fix_RISCVGenMacroFusion_build.patch",
-        "//:fix_compiler_rt.patch",
-        "//:libunwind.patch",
     ],
     strip_prefix = "llvm-project-" + LLVM_COMMIT,
     urls = ["https://github.com/llvm/llvm-project/archive/{commit}.tar.gz".format(commit = LLVM_COMMIT)],
 )
-#new_local_repository(
-#    name = "llvm-raw",
-#    build_file = "//:BUILD.llvm-raw",
-#    path = "../llvm-project",
-#)
 
 load("@llvm-raw//utils/bazel:configure.bzl", "llvm_configure")
 
-llvm_configure(name = "llvm-project")
+llvm_configure(
+    name = "llvm-project",
+    targets = ["X86", "AArch64"],
+)
 
 maybe(
     http_archive,
@@ -51,24 +46,6 @@ maybe(
     urls = [
         "https://github.com/zlib-ng/zlib-ng/archive/refs/tags/2.0.7.zip",
     ],
-)
-
-maybe(
-    http_archive,
-    name = "vulkan_headers",
-    build_file = "@llvm-raw//utils/bazel/third_party_build:vulkan_headers.BUILD",
-    sha256 = "19f491784ef0bc73caff877d11c96a48b946b5a1c805079d9006e3fbaa5c1895",
-    strip_prefix = "Vulkan-Headers-9bd3f561bcee3f01d22912de10bb07ce4e23d378",
-    urls = [
-        "https://github.com/KhronosGroup/Vulkan-Headers/archive/9bd3f561bcee3f01d22912de10bb07ce4e23d378.tar.gz",
-    ],
-)
-
-load("@llvm-raw//utils/bazel:vulkan_sdk.bzl", "vulkan_sdk_setup")
-
-maybe(
-    vulkan_sdk_setup,
-    name = "vulkan_sdk",
 )
 
 maybe(
