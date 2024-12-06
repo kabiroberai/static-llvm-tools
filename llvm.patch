@@ -1,36 +1,31 @@
 diff --git a/utils/bazel/llvm-project-overlay/llvm/config.bzl b/utils/bazel/llvm-project-overlay/llvm/config.bzl
-index b15ec9e1bb39..234723935c2c 100644
+index 2e3bff53e..5a7f018bb 100644
 --- a/utils/bazel/llvm-project-overlay/llvm/config.bzl
 +++ b/utils/bazel/llvm-project-overlay/llvm/config.bzl
-@@ -28,8 +28,8 @@ def native_arch_defines(arch, triple):
+@@ -28,7 +28,6 @@ def native_arch_defines(arch, triple):
  
  posix_defines = [
      "LLVM_ON_UNIX=1",
 -    "HAVE_BACKTRACE=1",
--    "BACKTRACE_HEADER=<execinfo.h>",
-+    #"HAVE_BACKTRACE=1",
-+    #"BACKTRACE_HEADER=<execinfo.h>",
+     "BACKTRACE_HEADER=<execinfo.h>",
      r'LTDL_SHLIB_EXT=\".so\"',
      r'LLVM_PLUGIN_EXT=\".so\"',
-     "LLVM_ENABLE_THREADS=1",
-@@ -48,7 +48,7 @@ posix_defines = [
+@@ -48,7 +47,6 @@ posix_defines = [
  linux_defines = posix_defines + [
      "_GNU_SOURCE",
      "HAVE_LINK_H=1",
 -    "HAVE_MALLINFO=1",
-+    #"HAVE_MALLINFO=1",
      "HAVE_SBRK=1",
      "HAVE_STRUCT_STAT_ST_MTIM_TV_NSEC=1",
  ]
 diff --git a/utils/bazel/third_party_build/zlib-ng.BUILD b/utils/bazel/third_party_build/zlib-ng.BUILD
-index 055261acb..27bb1c41f 100644
+index c41ea450f..ff386450c 100644
 --- a/utils/bazel/third_party_build/zlib-ng.BUILD
 +++ b/utils/bazel/third_party_build/zlib-ng.BUILD
-@@ -103,6 +103,6 @@ cc_library(
-     }),
+@@ -104,5 +104,6 @@ cc_library(
      # Clang includes zlib with angled instead of quoted includes, so we need
      # strip_include_prefix here.
--    strip_include_prefix = ".",
+     strip_include_prefix = ".",
 +    includes = ["."],
      visibility = ["//visibility:public"],
  )
